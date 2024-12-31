@@ -9,6 +9,7 @@ import { toast } from "@/hooks/use-toast";
 import { AIChatSession } from "@/lib/google-ai-model";
 import { generateThumbnail } from "@/lib/helper";
 import { ResumeDataType } from "@/types/resume.type";
+import { AnyForeignKeyBuilder } from "drizzle-orm/mysql-core";
 import { Loader, Sparkles } from "lucide-react";
 import React, { useCallback, useState } from "react";
 
@@ -38,7 +39,7 @@ const SummaryForm = (props: { handleNext: () => void }) => {
 
   const [loading, setLoading] = useState(false);
   const [aiGeneratedSummary, setAiGeneratedSummary] =
-    useState<GeneratesSummaryType | null>(null);
+    useState< any>(null);
 
   const handleChange = (e: { target: { value: string } }) => {
     const { value } = e.target;
@@ -192,7 +193,7 @@ const SummaryForm = (props: { handleNext: () => void }) => {
   </Card>
 ))} */}
 
-{aiGeneratedSummary.map((data, index) => (
+{aiGeneratedSummary.map((data:any, index:any) => (
   <Card
     role="button"
     key={index}

@@ -11,7 +11,7 @@ const PublicResume = () => {
   const param = useParams();
   const documentId = param.documentId as string;
   const { data, isSuccess, isLoading } = useGetDocument(documentId, true);
-  const resumeInfo = data?.data ?? ({} as ResumeDataType);
+  const resumeInfo = data?.data ?? ({} as any);
 
   if (!isLoading && !isSuccess) {
     return <Error />;
