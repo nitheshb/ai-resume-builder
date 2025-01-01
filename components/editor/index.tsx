@@ -25,7 +25,7 @@ const PROMPT = `Given the job title "{jobTitle}",
    contributions in that role. Do not include
     the job title itself in the output. Provide
      only the bullet points inside an unordered
-     list.The output string must be in following format 
+     list.The output must contain only following format 
       <ul><li>x</li><li>x</li></ul>
     `;
 
@@ -51,11 +51,18 @@ const RichTextEditor = (props: {
       setLoading(true);
       const prompt = PROMPT?.replace("{jobTitle}", jobTitle);
       const result = await AIChatSession.sendMessage(prompt);
-      const responseText = await result.response.text().replace(/^[{"}]|[{"}]$/g, "");
-      const validJsonArray = JSON.parse(`[${responseText}]`);
-      console.log('check it',validJsonArray)
-      setValue(validJsonArray[0]);
-      onEditorChange(validJsonArray[0]);
+      console.log('check it',result)
+
+      // const responseText = await result.response.text().replace(/^[{"}]|[{"}]$/g, "");
+      const responseText = await result.response.text().replace(/^[{"}]|[{"}]$/g, "").replace(/.*?<ul><\/ul>/, '');
+
+     
+      console.log('check it',responseText)
+
+      // const validJsonArray = JSON.parse(`[${responseText}]`);
+      // console.log('check it',validJsonArray)
+      setValue(responseText);
+      onEditorChange(responseText);
 
     } catch (error) {
       console.log(error);
